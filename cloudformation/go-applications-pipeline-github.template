@@ -121,11 +121,7 @@ Resources:
                                 - Name: Built
                             Configuration: 
                                 ProjectName: !Ref CodeBuild
-                -
-                    Name: Test
-                    Actions:
-  
-                - 
+                 - 
                     Name: Approvals
                     Actions:
                         - 
