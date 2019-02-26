@@ -122,44 +122,9 @@ Resources:
                             Configuration: 
                                 ProjectName: !Ref CodeBuild
                 -
-                    Name: Staging
+                    Name: Test
                     Actions:
-                        - 
-                            Name: DeployInfrastructure
-                            RunOrder: 1
-                            InputArtifacts:
-                                - Name: Built
-                            ActionTypeId:
-                                Category: Deploy
-                                Owner: AWS
-                                Version: 1
-                                Provider: CloudFormation
-                            Configuration:
-                                ActionMode: REPLACE_ON_FAILURE
-                                RoleArn: !Sub ${CodePipelineCloudFormationRole.Arn}
-                                Capabilities: CAPABILITY_NAMED_IAM
-                                StackName: !Sub ${ApplicationName}-staging
-                                TemplatePath: Built::cloudformation/go-applications-pipeline-infrastructure.template
-                                TemplateConfiguration: Built::config/staging.conf
-                                ParameterOverrides: !Sub |
-                                    {
-                                        "ApplicationName": "${ApplicationName}",
-                                        "EnvironmentName": "staging",
-                                        "ArtifactS3Bucket": "${ArtifactS3Bucket}"
-                                    }
-                        - 
-                            Name: DeployApplication
-                            RunOrder: 2
-                            InputArtifacts: 
-                                - Name: Built
-                            ActionTypeId:
-                                Category: Deploy
-                                Owner: AWS
-                                Version: 1
-                                Provider: CodeDeploy
-                            Configuration: 
-                                ApplicationName: !Ref ApplicationName
-                                DeploymentGroupName: staging
+  
                 - 
                     Name: Approvals
                     Actions:
@@ -296,7 +261,7 @@ Resources:
                                     ],
                                     "Resource": [
                                       "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-CloudFormation-${AWS::Region}",
-                                      "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${ApplicationName}-staging/*",
+                                      "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${ApplicationName}-test/*",
                                       "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${ApplicationName}-production/*"
                                       ],
                                     "Effect": "Allow"
@@ -423,9 +388,9 @@ Resources:
                                         "iam:DeleteInstanceProfile"
                                     ],
                                     "Resource": [
-                                      "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-staging-${AWS::Region}",
+                                      "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-test-${AWS::Region}",
                                       "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-production-${AWS::Region}",
-                                      "arn:aws:iam::${AWS::AccountId}:instance-profile/gotest-staging-InstanceProfile-*",
+                                      "arn:aws:iam::${AWS::AccountId}:instance-profile/gotest-test-InstanceProfile-*",
                                       "arn:aws:iam::${AWS::AccountId}:instance-profile/gotest-production-InstanceProfile-*",
                                       "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-CodeDeploy-${AWS::Region}"
                                      ]
