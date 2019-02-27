@@ -425,13 +425,7 @@ Resources:
                                         "iam:PassRole",
                                         "iam:DeleteInstanceProfile"
                                     ],
-                                    "Resource": [
-                                      "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-test-${AWS::Region}",
-                                      "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-production-${AWS::Region}",
-                                      "arn:aws:iam::${AWS::AccountId}:instance-profile/${ApplicationName}-test-InstanceProfile-*",
-                                      "arn:aws:iam::${AWS::AccountId}:instance-profile/${ApplicationName}-production-InstanceProfile-*",
-                                      "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-CodeDeploy-${AWS::Region}"
-                                     ]
+                                    "Resource": "*"
                                 }
                             ]
                         }
