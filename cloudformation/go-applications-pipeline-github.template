@@ -121,6 +121,45 @@ Resources:
                                 - Name: Built
                             Configuration: 
                                 ProjectName: !Ref CodeBuild
+                 -
+                    Name: Test
+                    Actions:
+                        - 
+                            Name: DeployInfrastructure
+                            RunOrder: 1
+                            InputArtifacts:
+                                - Name: Built
+                            ActionTypeId:
+                                Category: Deploy
+                                Owner: AWS
+                                Version: 1
+                                Provider: CloudFormation
+                            Configuration:
+                                ActionMode: REPLACE_ON_FAILURE
+                                RoleArn: !Sub ${CodePipelineCloudFormationRole.Arn}
+                                Capabilities: CAPABILITY_NAMED_IAM
+                                StackName: !Sub ${ApplicationName}-test
+                                TemplatePath: Built::cloudformation/go-applications-pipeline-infrastructure.template
+                                TemplateConfiguration: Built::config/test.conf
+                                ParameterOverrides: !Sub |
+                                    {
+                                        "ApplicationName": "${ApplicationName}",
+                                        "EnvironmentName": "test",
+                                        "ArtifactS3Bucket": "${ArtifactS3Bucket}"
+                                    }
+                        - 
+                            Name: DeployApplication
+                            RunOrder: 2
+                            InputArtifacts: 
+                                - Name: Built
+                            ActionTypeId:
+                                Category: Deploy
+                                Owner: AWS
+                                Version: 1
+                                Provider: CodeDeploy
+                            Configuration: 
+                                ApplicationName: !Ref ApplicationName
+                                DeploymentGroupName: test
                  - 
                     Name: Approvals
                     Actions:
