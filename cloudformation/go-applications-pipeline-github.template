@@ -121,10 +121,10 @@ Resources:
                                 - Name: Built
                             Configuration: 
                                 ProjectName: !Ref CodeBuild
-                 -
+                -
                     Name: Test
                     Actions:
-                        - 
+                        -
                             Name: DeployInfrastructure
                             RunOrder: 1
                             InputArtifacts:
