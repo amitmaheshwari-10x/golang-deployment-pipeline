@@ -281,12 +281,3 @@ Resources:
             Path: /
             Roles: 
                 - !Ref InstanceRole
-
-
-
-Outputs: 
-
-    URL: 
-        Description: Service URL
-        Value: !Sub http://localhost:8000/version 
-
