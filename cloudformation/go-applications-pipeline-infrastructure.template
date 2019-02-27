@@ -286,7 +286,7 @@ Resources:
 
 Outputs: 
 
-    WebsiteURL: 
-        Description: Webserver URL
-        Value: !Sub http://${LoadBalancer.DNSName}/version 
+    URL: 
+        Description: Service URL
+        Value: !Sub http://localhost:8000/version 
 
