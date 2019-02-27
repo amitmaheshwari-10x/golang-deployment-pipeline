@@ -163,7 +163,7 @@ Resources:
                             Configuration: 
                                 ApplicationName: !Ref ApplicationName
                                 DeploymentGroupName: test
-                 - 
+                - 
                     Name: Approvals
                     Actions:
                         - 
@@ -539,5 +539,4 @@ Outputs:
         Value: !GetAtt CodeDeployServiceRole.Arn
         Export:
             Name: !Sub CodeDeployServiceRoleArn-${ApplicationName}
-
 
