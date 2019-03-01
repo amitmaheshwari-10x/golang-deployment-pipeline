@@ -50,6 +50,11 @@ Parameters:
     PrivateSubnet2ID:
         Description: Please enter the ID for the private subnet in the second Availability Zone
         Type: String
+   
+    TargetGroup:
+        Description: Please enter the Target Group ARN
+        Type: String
+        Default: arn:aws:elasticloadbalancing:us-east-2:750614379083:targetgroup/Test-Test/aeaa85ec9fa08f37
         
 
 Mappings: 
@@ -187,13 +192,13 @@ Resources:
     # Load Balancer
     ###########################################
 
-    TargetGroup:
-        Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        Properties:
-            Name: !Sub ${ApplicationName}-${EnvironmentName}
-            VpcId: !Ref VpcID
-            Port: 8000
-            Protocol: HTTP
+    #TargetGroup:
+    #    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    #    Properties:
+    #        Name: !Sub ${ApplicationName}-${EnvironmentName}
+    #        VpcId: !Ref VpcID
+    #        Port: 8000
+    #        Protocol: HTTP
 
     ###########################################
     # CodeDeploy
