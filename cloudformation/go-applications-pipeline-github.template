@@ -405,6 +405,7 @@ Resources:
                                       "autoscaling:DescribeLaunchConfigurations",
                                       "autoscaling:UpdateAutoScalingGroup",
                                       "autoscaling:DescribeAutoScalingInstances",
+                                      "autoscaling:DescribeLoadBalancerTargetGroups",
                                       "codedeploy:GetDeploymentGroup",
                                       "codedeploy:CreateDeploymentGroup",
                                       "codedeploy:DeleteDeploymentGroup"
