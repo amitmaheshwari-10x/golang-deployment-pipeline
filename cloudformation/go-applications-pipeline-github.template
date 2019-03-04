@@ -37,6 +37,10 @@ Parameters:
         Description: Enter the GitHub branch to monitored
         Type: String
         Default: master
+        
+    KeyName:
+        Description: An existing key pair name within this AWS account to use for SSH access to machines
+        Type: String    
 
 Mappings:
   Send:
@@ -62,7 +66,12 @@ Metadata:
                     - GitHubUser
                     - GitHubRepository
                     - GitHubBranch
-            
+            - 
+                Label: 
+                    default: EC2 Instance Parameters
+                Parameters:
+                    - KeyName
+                    
         ParameterLabels:
             ApplicationName: 
                 default: Application Name
@@ -76,6 +85,8 @@ Metadata:
                 default: Repository Branch
             GitHubOAuthToken: 
                 default: OAuth2 Token
+            KeyName: 
+                default: Key pair name for enabling SSH access to machines    
 
 Resources:
 
@@ -148,7 +159,8 @@ Resources:
                                         "ArtifactS3Bucket": "${ArtifactS3Bucket}",
                                         "PrivateSubnet1ID":"subnet-033721ffd1793041e",
                                         "PrivateSubnet2ID":"subnet-0b7b89d07f7027540",
-                                        "VpcID":"vpc-00cb1126b7ff42611"
+                                        "VpcID":"vpc-00cb1126b7ff42611",
+                                        "KeyName": "amit-saas-test"
                                     }
                         - 
                             Name: DeployApplication
