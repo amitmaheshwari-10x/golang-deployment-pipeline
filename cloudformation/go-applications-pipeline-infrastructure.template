@@ -164,7 +164,8 @@ Resources:
     LaunchConfiguration:
         Type: AWS::AutoScaling::LaunchConfiguration
         Properties:
-            KeyName: !Ref KeyName 
+            KeyName: !Ref KeyName
+            SpotPrice: 100
             ImageId:  !FindInMap [AWSRegionToAMI, !Ref "AWS::Region", AMI]
             InstanceType: !Ref InstanceType
             IamInstanceProfile: !Ref InstanceProfile
