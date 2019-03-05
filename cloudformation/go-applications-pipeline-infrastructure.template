@@ -144,13 +144,13 @@ Resources:
         Properties: 
             VPCZoneIdentifier: 
                 - Fn::ImportValue: 
-                      !Sub ${EnvironmentName}-‘PrivateSubnet1’
+                      !Sub ${EnvironmentName}-PrivateSubnet1
                 - Fn::ImportValue: 
-                      !Sub ${EnvironmentName}-‘PrivateSubnet2’
+                      !Sub ${EnvironmentName}-PrivateSubnet2
             LaunchConfigurationName: !Ref LaunchConfiguration
             TargetGroupARNs: 
                 - Fn::ImportValue: 
-                      !Sub ${EnvironmentName}-‘TargetGroup-Default’
+                      !Sub ${EnvironmentName}-TargetGroup-Default
             MinSize: !Ref InstanceCount
             MaxSize: !Ref InstanceCount
             DesiredCapacity: !Ref InstanceCount
