@@ -12,6 +12,7 @@ Parameters:
 
     KeyName:
         Type: String
+        Default: amit-saas-test
         
     ApplicationName:
         Type: String
