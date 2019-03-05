@@ -149,18 +149,14 @@ Resources:
                                 ActionMode: REPLACE_ON_FAILURE
                                 RoleArn: !Sub ${CodePipelineCloudFormationRole.Arn}
                                 Capabilities: CAPABILITY_NAMED_IAM
-                                StackName: !Sub ${ApplicationName}-test
+                                StackName: !Sub ${ApplicationName}-Test
                                 TemplatePath: Built::cloudformation/go-applications-pipeline-infrastructure.template
                                 TemplateConfiguration: Built::config/test.conf
                                 ParameterOverrides: !Sub |
                                     {
                                         "ApplicationName": "${ApplicationName}",
-                                        "EnvironmentName": "test",
-                                        "ArtifactS3Bucket": "${ArtifactS3Bucket}",
-                                        "PrivateSubnet1ID":"subnet-033721ffd1793041e",
-                                        "PrivateSubnet2ID":"subnet-0b7b89d07f7027540",
-                                        "VpcID":"vpc-00cb1126b7ff42611",
-                                        "KeyName": "amit-saas-test"
+                                        "EnvironmentName": "Test",
+                                        "ArtifactS3Bucket": "${ArtifactS3Bucket}"
                                     }
                         - 
                             Name: DeployApplication
@@ -174,7 +170,7 @@ Resources:
                                 Provider: CodeDeploy
                             Configuration: 
                                 ApplicationName: !Ref ApplicationName
-                                DeploymentGroupName: test
+                                DeploymentGroupName: Test
                 - 
                     Name: Approvals
                     Actions:
@@ -203,13 +199,13 @@ Resources:
                                 ActionMode: CREATE_UPDATE
                                 RoleArn: !Sub ${CodePipelineCloudFormationRole.Arn}
                                 Capabilities: CAPABILITY_NAMED_IAM
-                                StackName: !Sub ${ApplicationName}-production
+                                StackName: !Sub ${ApplicationName}-Production
                                 TemplatePath: Built::cloudformation/go-applications-pipeline-infrastructure.template
                                 TemplateConfiguration: Built::config/production.conf
                                 ParameterOverrides: !Sub |
                                     {
                                         "ApplicationName": "${ApplicationName}",
-                                        "EnvironmentName": "production",
+                                        "EnvironmentName": "Production",
                                         "ArtifactS3Bucket": "${ArtifactS3Bucket}"
                                     }
                         - 
@@ -224,7 +220,7 @@ Resources:
                                 Provider: CodeDeploy
                             Configuration: 
                                 ApplicationName: !Ref ApplicationName
-                                DeploymentGroupName: production
+                                DeploymentGroupName: Production
                         
 
     CodeBuild:
@@ -311,8 +307,8 @@ Resources:
                                     ],
                                     "Resource": [
                                       "arn:aws:iam::${AWS::AccountId}:role/${ApplicationName}-CloudFormation-${AWS::Region}",
-                                      "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${ApplicationName}-test/*",
-                                      "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${ApplicationName}-production/*"
+                                      "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${ApplicationName}-Test/*",
+                                      "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${ApplicationName}-Production/*"
                                       ],
                                     "Effect": "Allow"
                                 },
