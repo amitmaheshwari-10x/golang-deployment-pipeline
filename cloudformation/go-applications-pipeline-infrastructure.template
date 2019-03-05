@@ -10,8 +10,6 @@ Parameters:
 
     # The following parameters are set dynamically by AWS CodePipeline 
 
-    KeyName:
-        Type: String
         
     ApplicationName:
         Type: String
@@ -164,8 +162,6 @@ Resources:
     LaunchConfiguration:
         Type: AWS::AutoScaling::LaunchConfiguration
         Properties:
-            KeyName: !Ref KeyName
-            SpotPrice: 100
             ImageId:  !FindInMap [AWSRegionToAMI, !Ref "AWS::Region", AMI]
             InstanceType: !Ref InstanceType
             IamInstanceProfile: !Ref InstanceProfile
