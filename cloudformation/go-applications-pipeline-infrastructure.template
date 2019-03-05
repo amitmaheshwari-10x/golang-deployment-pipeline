@@ -149,7 +149,7 @@ Resources:
                       !Sub ${EnvironmentName}-PrivateSubnet2
             LaunchConfigurationName: !Ref LaunchConfiguration
             TargetGroupARNs: 
-                - !Ref TargetGroup
+                - !Ref TargetGroup1
             MinSize: !Ref InstanceCount
             MaxSize: !Ref InstanceCount
             DesiredCapacity: !Ref InstanceCount
@@ -201,7 +201,7 @@ Resources:
     # Load Balancer
     ###########################################
 
-    TargetGroup:
+    TargetGroup1:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
         Properties:
             Name: !Sub ${ApplicationName}-${EnvironmentName}-TargetGroup
@@ -217,7 +217,7 @@ Resources:
              Actions:
                   - Type: forward
                     TargetGroupArn:
-                        Ref: TargetGroup
+                        Ref: TargetGroup1
              Conditions:
              - Field: path-pattern
                Values:
