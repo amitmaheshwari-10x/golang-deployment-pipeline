@@ -10,14 +10,20 @@ Parameters:
 
     # The following parameters are set dynamically by AWS CodePipeline 
 
-        
     ApplicationName:
         Type: String
 
     EnvironmentName:
         Type: String
+        AllowedValues:
+            - Dev
+            - Test
+            - Stage
+            - Production
+
 
     ArtifactS3Bucket:
+        Description: existing S3 bucket to store source and builds
         Type: String
 
     # All parameters below can be overridden on a per environment basis in config/*
@@ -137,11 +143,14 @@ Resources:
         Type: AWS::AutoScaling::AutoScalingGroup
         Properties: 
             VPCZoneIdentifier: 
-                - !Ref PrivateSubnet1ID
-                - !Ref PrivateSubnet2ID 
+                - Fn::ImportValue: 
+                      !Sub ${EnvironmentName}-‘PrivateSubnet1’
+                - Fn::ImportValue: 
+                      !Sub ${EnvironmentName}-‘PrivateSubnet2’
             LaunchConfigurationName: !Ref LaunchConfiguration
             TargetGroupARNs: 
-                - !Ref TargetGroup
+                - Fn::ImportValue: 
+                      !Sub ${EnvironmentName}-‘TargetGroup-Default’
             MinSize: !Ref InstanceCount
             MaxSize: !Ref InstanceCount
             DesiredCapacity: !Ref InstanceCount
@@ -226,7 +235,9 @@ Resources:
     ApplicationSecurityGroup:
         Type: AWS::EC2::SecurityGroup
         Properties: 
-            VpcId: !Ref VpcID
+            VpcId: 
+                 Fn::ImportValue:
+                     !Sub ${EnvironmentName}-VPC
             GroupDescription: Controls who can access the application servers
             SecurityGroupIngress:
                 # Only allow in bound from the load balancer
@@ -239,7 +250,9 @@ Resources:
     LoadBalancerSecurityGroup:
         Type: AWS::EC2::SecurityGroup
         Properties: 
-            VpcId: !Ref VpcID
+            VpcId: 
+                 Fn::ImportValue:
+                     !Sub ${EnvironmentName}-VPC
             GroupDescription: Controls who can access the load balancer
             SecurityGroupIngress:
                 # Allow access from anywhere
