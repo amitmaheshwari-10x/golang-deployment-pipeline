@@ -204,7 +204,7 @@ Resources:
     TargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
         Properties:
-            Name: !Sub ${ApplicationName}-${EnvironmentName}
+            Name: !Sub ${ApplicationName}-${EnvironmentName}-TargetGroup
             VpcId:
                  Fn::ImportValue:
                      !Sub ${EnvironmentName}-VPC
