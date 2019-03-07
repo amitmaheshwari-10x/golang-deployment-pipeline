@@ -402,6 +402,7 @@ Resources:
                                       "elasticloadbalancingv2:DescribeLoadBalancers",
                                       "elasticloadbalancing:CreateListener",
                                       "elasticloadbalancing:DescribeListeners",
+                                      "elasticloadbalancing:DescribeRules",
                                       "elasticloadbalancing:DeleteListener",
                                       "autoscaling:CreateAutoScalingGroup",
                                       "autoscaling:CreateLaunchConfiguration",
@@ -549,4 +550,3 @@ Outputs:
         Value: !GetAtt CodeDeployServiceRole.Arn
         Export:
             Name: !Sub CodeDeployServiceRoleArn-${ApplicationName}
-

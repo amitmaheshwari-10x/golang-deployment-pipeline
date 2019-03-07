@@ -149,8 +149,7 @@ Resources:
                       !Sub ${EnvironmentName}-PrivateSubnet2
             LaunchConfigurationName: !Ref LaunchConfiguration
             TargetGroupARNs: 
-                - Fn::ImportValue: 
-                      !Sub ${EnvironmentName}-TargetGroup-Default
+                - !Ref TargetGroup1
             MinSize: !Ref InstanceCount
             MaxSize: !Ref InstanceCount
             DesiredCapacity: !Ref InstanceCount
@@ -202,14 +201,31 @@ Resources:
     # Load Balancer
     ###########################################
 
-    #TargetGroup:
-    #    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    #    Properties:
-    #        Name: !Sub ${ApplicationName}-${EnvironmentName}
-    #        VpcId: !Ref VpcID
-    #        Port: 8000
-    #        Protocol: HTTP
-
+    TargetGroup1:
+        Type: AWS::ElasticLoadBalancingV2::TargetGroup
+        Properties:
+            Name: !Sub ${ApplicationName}-${EnvironmentName}-TargetGroup
+            VpcId:
+                 Fn::ImportValue:
+                     !Sub ${EnvironmentName}-VPC
+            Port: 8000
+            Protocol: HTTP
+    
+    ListenerRule:
+        Type: AWS::ElasticLoadBalancingV2::ListenerRule
+        Properties:
+             Actions:
+                  - Type: forward
+                    TargetGroupArn:
+                        Ref: TargetGroup1
+             Conditions:
+             - Field: path-pattern
+               Values:
+               - "/auth-service/*"
+             ListenerArn:
+                 Fn::ImportValue:
+                     !Sub ${EnvironmentName}-LoadBalancer-Listener
+             Priority: 1
     ###########################################
     # CodeDeploy
     ###########################################
